@@ -235,7 +235,7 @@ func (e *Environment) Create() error {
 		},
 		Spec: corev1.PodSpec{
 			SecurityContext: &corev1.PodSecurityContext{
-				FSGroup:             pointer.Int64(2000),
+				FSGroup:             pointer.Int64(1000),
 				FSGroupChangePolicy: &fsGroupChangePolicy,
 				RunAsUser:           pointer.Int64(1000),
 				RunAsNonRoot:        pointer.Bool(true),
