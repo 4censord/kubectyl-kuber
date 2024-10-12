@@ -63,7 +63,7 @@ type SftpConfiguration struct {
 	// If set to true, no write actions will be allowed on the SFTP server.
 	ReadOnly bool `default:"false" yaml:"read_only"`
 	// The docker image used for the SFTP server.
-	SftpImage string `json:"sftp_image" default:"ghcr.io/kubectyl/sftp-server:latest" yaml:"sftp_image"`
+	SftpImage string `json:"sftp_image" default:"ghcr.io/4censord/kubectyl-sftp-server:develop" yaml:"sftp_image"`
 }
 
 // ApiConfiguration defines the configuration for the internal API that is
