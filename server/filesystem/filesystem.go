@@ -530,6 +530,7 @@ func (fs *Filesystem) ListDirectory(p string) ([]Stat, error) {
 
 			var m *mimetype.MIME
 			d := "inode/directory"
+
 			if !f.IsDir() {
 				cleanedp := filepath.Join(cleaned, f.Name())
 				if f.Mode()&os.ModeSymlink != 0 {
@@ -542,11 +543,10 @@ func (fs *Filesystem) ListDirectory(p string) ([]Stat, error) {
 				// @see https://github.com/pterodactyl/panel/issues/4059
 				if cleanedp != "" && f.Mode()&os.ModeNamedPipe == 0 {
 					file, err := fs.manager.Open(filepath.Join(cleaned, f.Name()))
-					if err != nil {
-						// panic(fmt.Errorf("Error SFTP Open: %s", err))
-						fmt.Println(err)
+					if err == nil {
+						m, _ = mimetype.DetectReader(file)
 					}
-					m, _ = mimetype.DetectReader(file)
+					fmt.Println(err)
 				} else {
 					// Just pass this for an unknown type because the file could not safely be resolved within
 					// the server data path.
