@@ -67,31 +67,25 @@ jobs:
           body_path: ./RELEASE_CHANGELOG
 
       - name: Upload amd64 binary
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/kuber_linux_amd64
-          asset_name: kuber_linux_amd64
-          asset_content_type: application/octet-stream
+          path: dist/kuber_linux_amd64
+          name: kuber_linux_amd64
 
       - name: Upload arm64 binary
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/kuber_linux_arm64
-          asset_name: kuber_linux_arm64
-          asset_content_type: application/octet-stream
+          path: dist/kuber_linux_arm64
+          name: kuber_linux_arm64
 
       - name: Upload checksum
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./checksums.txt
-          asset_name: checksums.txt
-          asset_content_type: text/plain
+          path: ./checksums.txt
+          name: checksums.txt
