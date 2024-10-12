@@ -528,7 +528,7 @@ func (fs *Filesystem) ListDirectory(p string) ([]Stat, error) {
 		go func(idx int, f os.FileInfo) {
 			defer wg.Done()
 
-			var m *mimetype.MIME
+			var mime *mimetype.MIME
 			d := "inode/directory"
 			if !f.IsDir() {
 				cleanedp := filepath.Join(cleaned, f.Name())
@@ -546,7 +546,11 @@ func (fs *Filesystem) ListDirectory(p string) ([]Stat, error) {
 						// panic(fmt.Errorf("Error SFTP Open: %s", err))
 						fmt.Println(err)
 					}
-					m, _ = mimetype.DetectReader(file)
+					mime, err = mimetype.DetectReader(file)
+					if err != nil {
+						fmt.Println(err)
+						d = "application/octet-stream"
+					}
 				} else {
 					// Just pass this for an unknown type because the file could not safely be resolved within
 					// the server data path.
@@ -555,8 +559,8 @@ func (fs *Filesystem) ListDirectory(p string) ([]Stat, error) {
 			}
 
 			st := Stat{FileInfo: f, Mimetype: d}
-			if m != nil {
-				st.Mimetype = m.String()
+			if mime != nil {
+				st.Mimetype = mime.String()
 			}
 			out[idx] = st
 		}(i, file)
