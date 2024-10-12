@@ -143,7 +143,7 @@ func (b *LocalBackup) Restore(ctx context.Context, sId string, disk int64, stora
 			AccessModes: []corev1.PersistentVolumeAccessMode{
 				corev1.PersistentVolumeAccessMode("ReadWriteOnce"),
 			},
-			Resources: corev1.ResourceRequirements{
+			Resources: corev1.VolumeResourceRequirements{
 				Requests: corev1.ResourceList{
 					"storage": *resource.NewQuantity(disk, resource.BinarySI),
 				},
